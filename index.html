@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KaamSetu | Contractor Management</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f7fb;
+    color:#172033;
+}
+
+.screen{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:25px;
+}
+
+/* WELCOME */
+
+#welcome{
+    background:linear-gradient(135deg,#fff7df,#eaf3ff);
+    text-align:center;
+    flex-direction:column;
+}
+
+.person{
+    width:170px;
+    height:170px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#ffd98a,#ff9d3d);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:90px;
+    box-shadow:0 15px 40px #0002;
+    animation:float 3s infinite ease-in-out;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+}
+
+.namaste{
+    margin-top:25px;
+    font-size:32px;
+    font-weight:bold;
+}
+
+.tagline{
+    margin-top:12px;
+    color:#667085;
+    font-size:17px;
+}
+
+button{
+    border:0;
+    border-radius:14px;
+    padding:15px 28px;
+    background:#ff8a00;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.25s;
+}
+
+button:hover{
+    transform:translateY(-3px);
+    box-shadow:0 8px 20px #ff8a0040;
+}
+
+.proceed{
+    margin-top:30px;
+}
+
+/* LOGIN */
+
+.card{
+    width:100%;
+    max-width:430px;
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 15px 50px #0001;
+}
+
+.card h1{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#667085;
+    margin-bottom:25px;
+}
+
+input,select{
+    width:100%;
+    padding:15px;
+    margin:8px 0 15px;
+    border:1px solid #d8dee9;
+    border-radius:12px;
+    font-size:16px;
+}
+
+.hidden{
+    display:none !important;
+}
+
+/* DASHBOARD */
+
+#dashboard{
+    display:block;
+    padding:25px;
+}
+
+.topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+}
+
+.logo{
+    font-size:25px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#ff8a00;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:18px;
+}
+
+.tile{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 8px 25px #0000000b;
+    cursor:pointer;
+    transition:.25s;
+}
+
+.tile:hover{
+    transform:translateY(-5px);
+}
+
+.icon{
+    font-size:35px;
+    margin-bottom:15px;
+}
+
+.tile h3{
+    margin-bottom:7px;
+}
+
+.tile p{
+    color:#667085;
+}
+
+/* PANELS */
+
+.panel{
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    margin-top:20px;
+    box-shadow:0 8px 25px #0000000b;
+}
+
+.panel h2{
+    margin-bottom:18px;
+}
+
+.labour{
+    border:1px solid #e5e7eb;
+    padding:18px;
+    border-radius:15px;
+    margin-bottom:12px;
+}
+
+.badge{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    background:#e9f7ef;
+    color:#16834b;
+    font-size:12px;
+    margin-top:8px;
+}
+
+#map{
+    height:300px;
+    border-radius:15px;
+    background:#e6edf5;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#667085;
+    margin-top:15px;
+}
+
+.back{
+    background:#172033;
+    margin-bottom:15px;
+}
+
+.small{
+    font-size:13px;
+    color:#667085;
+}
+</style>
+</head>
+
+<body>
+
+<!-- WELCOME -->
+
+<section id="welcome" class="screen">
+
+    <div class="person">🙏</div>
+
+    <div class="namaste">
+        Namaste 🙏
+    </div>
+
+    <div class="tagline">
+        India's First Smart Contractor Management App
+    </div>
+
+    <button class="proceed" onclick="showLogin()">
+        Proceed →
+    </button>
+
+</section>
+
+
+<!-- LOGIN -->
+
+<section id="login" class="screen hidden">
+
+    <div class="card">
+
+        <h1>Secure Login 🔐</h1>
+        <p>Login with your registered mobile number.</p>
+
+        <input id="phone"
+               type="tel"
+               maxlength="10"
+               placeholder="Enter mobile number">
+
+        <button onclick="sendOTP()">
+            Send OTP
+        </button>
+
+        <div id="otpBox" class="hidden">
+
+            <input id="otp"
+                   maxlength="6"
+                   placeholder="Enter OTP">
+
+            <button onclick="verifyOTP()">
+                Verify & Continue
+            </button>
+
+            <p class="small">
+                Demo OTP: 123456
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- DASHBOARD -->
+
+<section id="dashboard" class="hidden">
+
+    <div class="topbar">
+
+        <div class="logo">
+            Kaam<span>Setu</span> 🚧
+        </div>
+
+        <button onclick="logout()">
+            Logout
+        </button>
+
+    </div>
+
+    <h2>Contractor Dashboard</h2>
+
+    <p class="small">
+        Manage your workforce and construction sites.
+    </p>
+
+    <div class="grid">
+
+        <div class="tile" onclick="openPanel('labours')">
+            <div class="icon">👷</div>
+            <h3>Labour Management</h3>
+            <p>Add and manage workers.</p>
+        </div>
+
+        <div class="tile" onclick="openPanel('sites')">
+            <div class="icon">🏗️</div>
+            <h3>Working Sites</h3>
+            <p>Manage your project sites.</p>
+        </div>
+
+        <div class="tile">
+            <div class="icon">📋</div>
+            <h3>Attendance</h3>
+            <p>Track daily attendance.</p>
+        </div>
+
+        <div class="tile">
+            <div class="icon">📊</div>
+            <h3>Reports</h3>
+            <p>View workforce reports.</p>
+        </div>
+
+    </div>
+
+
+    <!-- LABOUR PANEL -->
+
+    <div id="labours" class="panel hidden">
+
+        <button class="back" onclick="closePanel('labours')">
+            ← Dashboard
+        </button>
+
+        <h2>👷 Labour Management</h2>
+
+        <input id="labourName"
+               placeholder="Labour name">
+
+        <input id="labourPhone"
+               placeholder="Mobile number">
+
+        <select id="labourSkill">
+
+            <option value="">
+                Select skill / level
+            </option>
+
+            <option>
+                Helper
+            </option>
+
+            <option>
+                Skilled Worker
+            </option>
+
+            <option>
+                Mason
+            </option>
+
+            <option>
+                Electrician
+            </option>
+
+            <option>
+                Supervisor
+            </option>
+
+        </select>
+
+        <input id="labourID"
+               placeholder="Internal Labour ID">
+
+        <input id="emergency"
+               placeholder="Emergency contact">
+
+        <button onclick="addLabour()">
+            + Add Labour
+        </button>
+
+        <div id="labourList"></div>
+
+    </div>
+
+
+    <!-- SITE PANEL -->
+
+    <div id="sites" class="panel hidden">
+
+        <button class="back" onclick="closePanel('sites')">
+            ← Dashboard
+        </button>
+
+        <h2>🏗️ Working Site</h2>
+
+        <input id="siteName"
+               placeholder="Site name">
+
+        <input id="siteAddress"
+               placeholder="Site address">
+
+        <button onclick="addSite()">
+            + Add Site
+        </button>
+
+        <div id="siteList"></div>
+
+        <div id="map">
+            📍 Your site map will appear here
+        </div>
+
+        <br>
+
+        <button onclick="getLocation()">
+            📍 Locate My Current Position
+        </button>
+
+        <p id="locationText" class="small"></p>
+
+    </div>
+
+</section>
+
+
+<script>
+
+function hideAll(){
+    document.getElementById("welcome").classList.add("hidden");
+    document.getElementById("login").classList.add("hidden");
+    document.getElementById("dashboard").classList.add("hidden");
+}
+
+function showLogin(){
+    hideAll();
+    document.getElementById("login").classList.remove("hidden");
+}
+
+function sendOTP(){
+
+    let phone =
+        document.getElementById("phone").value;
+
+    if(phone.length !== 10){
+        alert("Please enter a valid 10 digit number.");
+        return;
+    }
+
+    document.getElementById("otpBox")
+        .classList.remove("hidden");
+
+    alert("Demo OTP sent: 123456");
+}
+
+function verifyOTP(){
+
+    let otp =
+        document.getElementById("otp").value;
+
+    if(otp === "123456"){
+
+        hideAll();
+
+        document.getElementById("dashboard")
+            .classList.remove("hidden");
+
+    }else{
+
+        alert("Incorrect OTP.");
+
+    }
+}
+
+function logout(){
+
+    hideAll();
+
+    document.getElementById("welcome")
+        .classList.remove("hidden");
+
+}
+
+function openPanel(id){
+
+    document.getElementById(id)
+        .classList.remove("hidden");
+
+}
+
+function closePanel(id){
+
+    document.getElementById(id)
+        .classList.add("hidden");
+
+}
+
+
+/* LABOUR */
+
+function addLabour(){
+
+    let name =
+        document.getElementById("labourName").value;
+
+    let phone =
+        document.getElementById("labourPhone").value;
+
+    let skill =
+        document.getElementById("labourSkill").value;
+
+    let id =
+        document.getElementById("labourID").value;
+
+    if(!name || !phone || !skill || !id){
+
+        alert("Please fill the required information.");
+        return;
+
+    }
+
+    let box =
+        document.createElement("div");
+
+    box.className = "labour";
+
+    box.innerHTML = `
+        <strong>👷 ${name}</strong>
+        <br>
+        Labour ID: ${id}
+        <br>
+        Skill: ${skill}
+        <br>
+        Mobile: 🔒 Protected
+        <br>
+        <span class="badge">
+            Private Labour Profile
+        </span>
+    `;
+
+    document
+        .getElementById("labourList")
+        .appendChild(box);
+
+    document.getElementById("labourName").value="";
+    document.getElementById("labourPhone").value="";
+    document.getElementById("labourSkill").value="";
+    document.getElementById("labourID").value="";
+}
+
+
+/* SITE */
+
+function addSite(){
+
+    let name =
+        document.getElementById("siteName").value;
+
+    let address =
+        document.getElementById("siteAddress").value;
+
+    if(!name){
+
+        alert("Enter site name.");
+        return;
+
+    }
+
+    let box =
+        document.createElement("div");
+
+    box.className="labour";
+
+    box.innerHTML=`
+        <strong>🏗️ ${name}</strong>
+        <br>
+        ${address || "Address not added"}
+        <br>
+        <span class="badge">
+            Active Site
+        </span>
+    `;
+
+    document
+        .getElementById("siteList")
+        .appendChild(box);
+
+}
+
+
+/* LOCATION */
+
+function getLocation(){
+
+    if(!navigator.geolocation){
+
+        alert("Location is not supported by this browser.");
+        return;
+
+    }
+
+    navigator.ge
