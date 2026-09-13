@@ -605,12 +605,22 @@ function addSite(){
 /* LOCATION */
 
 function getLocation(){
-
     if(!navigator.geolocation){
-
         alert("Location is not supported by this browser.");
         return;
-
     }
 
-    navigator.ge
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            let lat = position.coords.latitude;
+            let lng = position.coords.longitude;
+            document.getElementById("locationText").innerText = `Lat: ${lat}, Lng: ${lng}`;
+        },
+        () => {
+            alert("Unable to retrieve location.");
+        }
+    );
+}
+</script>
+</body>
+</html>
